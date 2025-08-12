@@ -14,7 +14,7 @@ export const backgroundEntity: CanvasEntity = {
             y,
             ctx.canvas.width - 50,
             ctx.canvas.height - 50,
-            'rgba(124, 122, 115, 0.05)',
+            '#15071a',
             35,
         );
         drawNeonRectLine(
