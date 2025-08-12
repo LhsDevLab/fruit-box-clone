@@ -1,12 +1,14 @@
-import { drawRect } from '@/canvas/tools';
+import { clearCanvas } from '../tools';
 import { game } from '@/canvas/layers';
 import type { CanvasEntity } from '@/types';
+import { drawNeonApple } from '../tools';
 
 export const gameEntity: CanvasEntity = {
-    x: 10,
-    y: 10,
+    x: 0,
+    y: 0,
     draw: (x, y) => {
-        drawRect(game, x, y, 100, 100, 'red');
+        clearCanvas(game);
+        drawNeonApple(game, x, y, 250, 250);
     },
     childrens: [],
 };

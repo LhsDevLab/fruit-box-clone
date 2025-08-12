@@ -19,7 +19,8 @@
             "@/*": ["src/*"],
             "@types": ["src/types/index.ts"],
             "@engine": ["src/engine/index.ts"],
-            "@canvas": ["src/canvas/index.ts"]
+            "@canvas": ["src/canvas/index.ts"],
+            "@assets": ["src/assets/index.ts"]
         },
 
         /* Linting */

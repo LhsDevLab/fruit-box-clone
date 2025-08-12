@@ -1,19 +1,31 @@
 import type { CanvasEntity } from '@/types';
 import { background } from '../layers';
-import { drawRect } from '../tools';
+import { drawRectFill, clearCanvas, drawNeonRectLine } from '../tools';
 
 export const backgroundEntity: CanvasEntity = {
-    x: 0,
-    y: 0,
-    draw: () => {
+    x: 25,
+    y: 25,
+    draw: (x, y) => {
         const ctx = background.getCtx();
-        drawRect(
+        clearCanvas(background);
+        drawRectFill(
             background,
-            0,
-            0,
-            ctx.canvas.width,
-            ctx.canvas.height,
-            'lightblue',
+            x,
+            y,
+            ctx.canvas.width - 50,
+            ctx.canvas.height - 50,
+            'rgba(124, 122, 115, 0.05)',
+            35,
+        );
+        drawNeonRectLine(
+            background,
+            x,
+            y,
+            ctx.canvas.width - 50,
+            ctx.canvas.height - 50,
+            'rgba(255, 217, 103, 0.2)',
+            35,
+            [10, 5, 3, 3],
         );
     },
     childrens: [],

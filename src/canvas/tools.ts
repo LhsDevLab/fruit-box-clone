@@ -1,4 +1,5 @@
 import type { Layer } from '@/types';
+import { imageLoader } from '@assets';
 
 export function drawLine(
     layer: Layer,
@@ -19,15 +20,131 @@ export function clearCanvas(layer: Layer) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
-export function drawRect(
+export function drawRectFill(
     layer: Layer,
     x: number,
     y: number,
     width: number,
     height: number,
     color: string,
+    radius: number = 0,
 ) {
     const ctx = layer.getCtx();
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, width, height);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+    ctx.fill();
+}
+
+export function drawRectLine(
+    layer: Layer,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: string,
+    radius: number = 0,
+    lineWidth: number = 2,
+) {
+    const ctx = layer.getCtx();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+
+    // 선의 연결점과 끝점 스타일 설정으로 각도 유지
+    ctx.lineJoin = 'miter'; // 모서리를 뾰족하게 유지
+    ctx.lineCap = 'round'; // 선의 끝을 정사각형으로
+    ctx.miterLimit = 10; // miter 길이 제한 (선택적)
+
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+    ctx.stroke();
+}
+
+export function drawApple(
+    layer: Layer,
+    x: number,
+    y: number,
+    width: number = 50,
+    height: number = 50,
+    alpha: number = 1.0, // 투명도 추가 (0.0 ~ 1.0)
+) {
+    const ctx = layer.getCtx();
+    const appleImg = imageLoader.getImage('apple');
+
+    if (!appleImg) {
+        console.warn('Apple image not loaded yet');
+        return;
+    }
+
+    const originalAlpha = ctx.globalAlpha;
+    ctx.globalAlpha = alpha;
+    
+    ctx.drawImage(appleImg, x, y, width, height);
+    
+    ctx.globalAlpha = originalAlpha;
+}
+
+export function drawNeonApple(
+    layer: Layer,
+    x: number,
+    y: number,
+    width: number = 50,
+    height: number = 50,
+) {
+    const neonLayers = [
+        { thickness: 15, alpha: 0.2 },
+        { thickness: 13, alpha: 0.2 },
+        { thickness: 11, alpha: 0.2 },
+        { thickness: 10, alpha: 0.5 },
+    ];
+
+    neonLayers.forEach(({ thickness, alpha }) => {
+        const expandedWidth = width + thickness * 2;
+        const expandedHeight = height + thickness * 2;
+
+        const adjustedX = x - thickness;
+        const adjustedY = y - thickness;
+
+        drawApple(
+            layer,
+            adjustedX,
+            adjustedY,
+            expandedWidth,
+            expandedHeight,
+            alpha,
+        );
+    });
+}
+
+export function drawNeonRectLine(
+    layer: Layer,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: string,
+    radius: number = 0,
+    neonWidth: number[],
+) {
+    for (const lineWidth of neonWidth) {
+        drawRectLine(layer, x, y, width, height, color, radius, lineWidth);
+    }
 }
