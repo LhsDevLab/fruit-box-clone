@@ -6,7 +6,7 @@ function makeBlocks(): Block[][] {
     for (let i = 0; i < role.height; i++) {
         const row: Block[] = [];
         for (let j = 0; j < role.width; j++) {
-            row.push({ x: j, y: i, value: null });
+            row.push({ x: j, y: i, value: 5 });
         }
         blocks.push(row);
     }
@@ -17,7 +17,12 @@ export function setReady(): Board {
     board.blocks = makeBlocks();
     board.achievedSum = 0;
     board.status = 'ready';
-    console.log(board);
 
+    return board;
+}
+
+export function setInProgress(): Board {
+    board.status = 'in-progress';
+    board.blocks = makeBlocks();
     return board;
 }

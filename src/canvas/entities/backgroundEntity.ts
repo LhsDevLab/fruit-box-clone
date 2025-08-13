@@ -23,9 +23,9 @@ export const backgroundEntity: CanvasEntity = {
             y,
             ctx.canvas.width - 50,
             ctx.canvas.height - 50,
-            'rgba(255, 217, 103, 0.2)',
+            'rgba(255, 217, 103, 0.5)',
             35,
-            [10, 5, 3, 3],
+            [5, 3],
         );
     },
     childrens: [],

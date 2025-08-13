@@ -13,7 +13,7 @@ export const rootEntity: CanvasEntity = {
     childrens: [backgroundEntity, gameEntity, uiEntity],
 };
 
-function refreshCanvas() {
+export function refreshCanvas() {
     CanvasEntityController.refresh(rootEntity, rootEntity.x, rootEntity.y);
 }
 

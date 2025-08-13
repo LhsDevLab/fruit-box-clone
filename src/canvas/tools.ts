@@ -85,6 +85,7 @@ export function drawApple(
     width: number = 50,
     height: number = 50,
     alpha: number = 1.0, // 투명도 추가 (0.0 ~ 1.0)
+    value?: number | null, // 블록의 숫자 값
 ) {
     const ctx = layer.getCtx();
     const appleImg = imageLoader.getImage('apple');
@@ -96,9 +97,40 @@ export function drawApple(
 
     const originalAlpha = ctx.globalAlpha;
     ctx.globalAlpha = alpha;
-    
+
+    // 사과 이미지 그리기
     ctx.drawImage(appleImg, x, y, width, height);
-    
+
+    // 숫자가 있으면 사과 위에 텍스트 그리기
+    if (value !== null && value !== undefined) {
+        const fontSize = Math.min(width, height) * 0.35;
+        const color = 'rgba(255, 217, 103, 1)';
+        const textX = x + width / 2;
+        const textY = y + height * (3 / 5);
+
+        // 텍스트에 그림자 효과 추가 (가독성 향상)
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 3;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
+
+        drawText(
+            layer,
+            value.toString(),
+            textX,
+            textY,
+            fontSize,
+            color,
+            'Arial',
+        );
+
+        // 그림자 효과 초기화
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+    }
+
     ctx.globalAlpha = originalAlpha;
 }
 
@@ -147,4 +179,23 @@ export function drawNeonRectLine(
     for (const lineWidth of neonWidth) {
         drawRectLine(layer, x, y, width, height, color, radius, lineWidth);
     }
+}
+
+export function drawText(
+    layer: Layer,
+    text: string,
+    x: number,
+    y: number,
+    fontSize: number = 20,
+    color: string = 'white',
+    fontFamily: string = 'Arial',
+    textAlign: CanvasTextAlign = 'center',
+    textBaseline: CanvasTextBaseline = 'middle',
+) {
+    const ctx = layer.getCtx();
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = color;
+    ctx.textAlign = textAlign;
+    ctx.textBaseline = textBaseline;
+    ctx.fillText(text, x, y);
 }

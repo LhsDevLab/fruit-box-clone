@@ -1,5 +1,6 @@
-import { setReady as setReadyBoard } from './board';
+import { setInProgress, setReady } from './board';
 
-export function setReady() {
-    setReadyBoard();
+export function start() {
+    setReady();
+    setInProgress;
 }

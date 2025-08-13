@@ -1,5 +1,6 @@
 import { initCanvas } from '@canvas';
-import { setReady } from './engine';
+import { start } from '@engine';
+import { refreshCanvas } from '@canvas';
 import './style.css';
 
 async function main() {
@@ -10,7 +11,10 @@ async function main() {
         await initCanvas(appElement, window);
 
         // 게임 준비 완료
-        setReady();
+        start();
+
+        // 캔버스 리프레시
+        refreshCanvas();
 
         console.log('Game initialized successfully');
     } catch (error) {
