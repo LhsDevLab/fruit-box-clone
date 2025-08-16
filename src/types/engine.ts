@@ -1,9 +1,8 @@
-export type Value = number | null;
-
 export interface Block {
     x: number;
     y: number;
-    value: Value;
+    value: number | null;
+    status: 'normal' | 'highlighted';
 }
 
 export interface Role {

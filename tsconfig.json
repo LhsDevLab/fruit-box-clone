@@ -20,7 +20,8 @@
             "@types": ["src/types/index.ts"],
             "@engine": ["src/engine/index.ts"],
             "@canvas": ["src/canvas/index.ts"],
-            "@assets": ["src/assets/index.ts"]
+            "@assets": ["src/assets/index.ts"],
+            "@controllers": ["src/controller/index.ts"]
         },
 
         /* Linting */

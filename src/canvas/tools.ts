@@ -20,6 +20,17 @@ export function clearCanvas(layer: Layer) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
+export function clearRectFill(
+    layer: Layer,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+) {
+    const ctx = layer.getCtx();
+    ctx.clearRect(x, y, width, height);
+}
+
 export function drawRectFill(
     layer: Layer,
     x: number,

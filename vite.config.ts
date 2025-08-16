@@ -12,6 +12,7 @@ export default defineConfig({
             '@engine': resolve(__dirname, './src/engine/index.ts'),
             '@canvas': resolve(__dirname, './src/canvas/index.ts'),
             '@assets': resolve(__dirname, './src/assets'),
+            '@controllers': resolve(__dirname, './src/controllers/index.ts'),
         },
     },
 });

@@ -23,7 +23,7 @@ export const backgroundEntity: CanvasEntity = {
             y,
             ctx.canvas.width - 50,
             ctx.canvas.height - 50,
-            'rgba(255, 217, 103, 0.5)',
+            'rgba(255, 217, 103, 0.7)',
             35,
             [5, 3],
         );

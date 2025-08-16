@@ -1,2 +1,2 @@
-export * from './controller/main';
+export * from './controller/board';
 export * from './status';
