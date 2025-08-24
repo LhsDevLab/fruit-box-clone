@@ -64,7 +64,7 @@ export function drawRectLine(
     height: number,
     color: string,
     radius: number = 0,
-    lineWidth: number = 2,
+    lineWidth: number = 0,
 ) {
     const ctx = layer.getCtx();
     ctx.strokeStyle = color;

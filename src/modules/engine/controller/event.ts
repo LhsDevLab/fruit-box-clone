@@ -4,22 +4,21 @@ import { mouseInfo } from '../mouse';
 import { getAppleCoordsInRect } from '@/modules/canvas/controller/game';
 import { selectedBlock } from '../status';
 import { updateApple } from '@/controller/updateApple';
+import { clearSelected } from '../mouse';
+import { gameEntity } from '@/modules/canvas/entitie/gameEntity';
 
 function onMouseMove(evt: MouseEvent) {
     const mousePos = getMousePos(ui.canvas, evt);
     mouseInfo.currentX = mousePos.x;
     mouseInfo.currentY = mousePos.y;
     if (mouseInfo.startX !== null && mouseInfo.startY !== null) {
-        // const selected = getAppleCoordsInRect(
-        //     mouseInfo.startX,
-        //     mouseInfo.startY,
-        //     mouseInfo.currentX,
-        //     mouseInfo.currentY,
-        // );
-        const selected = [
-            { x: 1, y: 1 },
-            { x: 2, y: 2 },
-        ];
+        clearSelected();
+        const selected = getAppleCoordsInRect(
+            mouseInfo.startX,
+            mouseInfo.startY,
+            mouseInfo.currentX,
+            mouseInfo.currentY,
+        );
         for (const coord of selected) {
             const key = `${coord.x},${coord.y}`;
             selectedBlock.add(key);
@@ -27,6 +26,7 @@ function onMouseMove(evt: MouseEvent) {
         for (const { x, y } of selected) {
             updateApple(x, y, undefined);
         }
+        gameEntity.refresh();
     }
 }
 
@@ -37,5 +37,6 @@ export function initEvents() {
     });
     ui.canvas.addEventListener('mouseup', () => {
         clickEnd();
+        gameEntity.refresh();
     });
 }

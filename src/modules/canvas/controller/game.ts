@@ -1,7 +1,7 @@
 import { CanvasEntity, CanvasEntityChildAdder } from '@/types/canvas';
 import { applesEntity, drawApple } from '../entitie/gameEntity';
 import { game } from '../layers';
-import { role } from '@/modules/engine';
+import { board, role } from '@/modules/engine';
 import type { Role, Board, Block } from '@/types/engine';
 
 function getCellSizeInfo(role: Role): {
@@ -69,23 +69,16 @@ export function getAppleCoordsInRect(
     endX: number,
     endY: number,
 ): { x: number; y: number }[] {
-    const canvasWidth = game.canvas.width;
-    const canvasHeight = game.canvas.height;
-    const gridPadding = 40;
-    const cellSize = Math.min(
-        (canvasWidth - gridPadding * 2) / role.width,
-        (canvasHeight - gridPadding * 2) / role.height,
-    );
-    const gridStartX = (canvasWidth - cellSize * role.width) / 2;
-    const gridStartY = (canvasHeight - cellSize * role.height) / 2;
+    const {
+        startX: gridStartX,
+        startY: gridStartY,
+        cellSize,
+    } = getCellSizeInfo(role);
 
     const coords: { x: number; y: number }[] = [];
 
-    applesEntity.childrens.forEach((appleRow: any) => {
-        appleRow.childrens.forEach((apple: any) => {
-            const block: Block = apple.block;
-            if (!block) return;
-            // 사과의 중심 좌표 계산
+    board.blocks.forEach((row) => {
+        row.forEach((block) => {
             const appleCenterX = gridStartX + block.x * cellSize + cellSize / 2;
             const appleCenterY = gridStartY + block.y * cellSize + cellSize / 2;
             // 드래그 영역에 포함되는지 체크

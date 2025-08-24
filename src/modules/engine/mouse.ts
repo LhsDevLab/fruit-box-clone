@@ -1,6 +1,5 @@
 import type { MouseInfo } from '@/types/mouse';
 import { selectedBlock } from './status';
-import { updateApple } from '@/controller/updateApple';
 
 export const mouseInfo: MouseInfo = {
     startX: null,
@@ -27,12 +26,9 @@ export function clickStart() {
 export function clickEnd() {
     mouseInfo.startX = null;
     mouseInfo.startY = null;
-    const selected = Array.from(selectedBlock).map((e) => {
-        const [x, y] = e.split(',').map(Number);
-        return { x, y };
-    });
+    clearSelected();
+}
+
+export function clearSelected() {
     selectedBlock.clear();
-    for (const { x, y } of selected) {
-        updateApple(x, y, undefined);
-    }
 }

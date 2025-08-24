@@ -16,12 +16,12 @@ export function drawApple(
     if (selectedBlock.has(`${block.x},${block.y}`)) {
         tools.drawRectFill(
             game,
-            x,
-            y,
-            appleSize,
-            appleSize,
+            x + 1,
+            y + 1,
+            appleSize - 2,
+            appleSize - 2,
             'rgba(255, 217, 103, 0.5)',
-            0,
+            25,
         );
         tools.drawApple(
             game,
@@ -56,11 +56,11 @@ function drawGrid(x: number, y: number) {
 
     for (let i = 1; i < role.width; i++) {
         const lineX = startX + i * cellSize;
-        tools.drawRectLine(game, lineX, startY, 1, gridHeight, color, 0, 1);
+        tools.drawRectLine(game, lineX, startY, 1, gridHeight, color, 0, 2);
     }
     for (let j = 1; j < role.height; j++) {
         const lineY = startY + j * cellSize;
-        tools.drawRectLine(game, startX, lineY, gridWidth, 1, color, 0, 1);
+        tools.drawRectLine(game, startX, lineY, gridWidth, 1, color, 0, 2);
     }
 }
 
