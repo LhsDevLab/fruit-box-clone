@@ -1,6 +1,12 @@
 import { updateApple } from '@/controller/updateApple';
-import { selectedBlock, board, role } from '@/modules/engine/status';
+import {
+    selectedBlock,
+    board,
+    role,
+    checkAllBlocksCleared,
+} from '@/modules/engine/status';
 import { uiEntity } from '@/modules/canvas/entitie/uiEntity';
+import { endGame } from './endGame';
 
 export function checkList(): boolean {
     if (board.status !== 'in-progress') return false;
@@ -19,7 +25,11 @@ export function checkList(): boolean {
             updateApple(x, y, null);
         });
         uiEntity.refresh();
+        if (checkAllBlocksCleared()) {
+            endGame();
+        }
         return true;
     }
+
     return false;
 }

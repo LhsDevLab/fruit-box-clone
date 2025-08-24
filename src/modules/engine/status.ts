@@ -23,6 +23,12 @@ export function setSelected(coods: { x: number; y: number }[]) {
 }
 
 let timer: NodeJS.Timeout | null = null;
+export function clearTimer() {
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+}
 
 export function resetTimer() {
     if (timer) {
@@ -34,8 +40,18 @@ export function resetTimer() {
         if (board.remainTime <= 0) {
             if (timer) {
                 endGame();
-                clearInterval(timer);
             }
         }
     }, 1000);
+}
+
+export function checkAllBlocksCleared() {
+    const allCleared = board.blocks.every((row) =>
+        row.every((block) => block.value === null),
+    );
+    if (allCleared) {
+        endGame();
+        return true;
+    }
+    return false;
 }
