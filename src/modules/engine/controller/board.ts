@@ -1,5 +1,5 @@
-import type { Board, Block } from '@/types/engine';
-import { role, board } from '../status';
+import type { Block } from '@/types/engine';
+import { role, board, resetTimer } from '../status';
 
 function makeBlockValues(): number[][] {
     const values: number[][] = [];
@@ -254,10 +254,14 @@ function makeBlocks(): Block[][] {
     return blocks;
 }
 
-export function setReady(): Board {
+export function setReady() {
     board.blocks = makeBlocks();
-    board.achievedSum = 0;
     board.status = 'ready';
+    board.remainTime = role.maxTime;
+}
 
-    return board;
+export function setStart() {
+    board.achievedSum = 0;
+    board.status = 'in-progress';
+    resetTimer();
 }

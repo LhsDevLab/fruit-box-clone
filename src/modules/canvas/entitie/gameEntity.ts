@@ -2,7 +2,7 @@ import * as tools from '../tools';
 import { game } from '@/modules/canvas/layers';
 import { CanvasEntity } from '@/types/canvas';
 import type { Block } from '@/types/engine';
-import { role, selectedBlock } from '@/modules/engine';
+import { role, selectedBlock } from '@/modules/engine/status';
 import { clearCanvas } from '../tools';
 
 export function drawApple(
@@ -13,7 +13,11 @@ export function drawApple(
 ) {
     tools.clearRectFill(game, x, y, appleSize, appleSize);
     if (block.value === null) return;
-    if (selectedBlock.has(`${block.x},${block.y}`)) {
+    if (
+        selectedBlock.find(
+            (coord) => coord.x === block.x && coord.y === block.y,
+        )
+    ) {
         tools.drawRectFill(
             game,
             x + 1,

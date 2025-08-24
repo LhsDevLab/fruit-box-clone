@@ -1,5 +1,5 @@
 import { applesEntity } from '@/modules/canvas/entitie/gameEntity';
-import { board } from '@/modules/engine';
+import { board } from '@/modules/engine/status';
 import type { CanvasEntity } from '@/types/canvas';
 import type { Block } from '@/types/engine';
 

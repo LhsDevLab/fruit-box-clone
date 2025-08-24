@@ -7,7 +7,7 @@ export async function load(element: HTMLElement, window: Window) {
     await loadImages();
 
     // 캔버스 초기화
-    initCanvas(element, window);
+    initCanvas(element);
 
-    initEvents();
+    initEvents(window);
 }

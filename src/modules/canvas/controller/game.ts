@@ -1,8 +1,8 @@
 import { CanvasEntity, CanvasEntityChildAdder } from '@/types/canvas';
 import { applesEntity, drawApple } from '../entitie/gameEntity';
 import { game } from '../layers';
-import { board, role } from '@/modules/engine';
-import type { Role, Board, Block } from '@/types/engine';
+import { board, role } from '@/modules/engine/status';
+import type { Role, Board } from '@/types/engine';
 
 function getCellSizeInfo(role: Role): {
     startX: number;
