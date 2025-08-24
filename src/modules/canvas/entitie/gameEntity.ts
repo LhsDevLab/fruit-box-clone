@@ -1,7 +1,9 @@
 import * as tools from '../tools';
-import { game } from '@/canvas/layers';
-import type { Block, CanvasEntity } from '@/types';
-import { role } from '@/engine';
+import { game } from '@/modules/canvas/layers';
+import { CanvasEntity } from '@/types/canvas';
+import type { Block } from '@/types/engine';
+import { role, selectedBlock } from '@/modules/engine';
+import { clearCanvas } from '../tools';
 
 export function drawApple(
     block: Block,
@@ -10,19 +12,29 @@ export function drawApple(
     appleSize: number,
 ) {
     tools.clearRectFill(game, x, y, appleSize, appleSize);
-    if (block.value !== null) {
-        tools.drawApple(game, x, y, appleSize, appleSize, 1.0, block.value);
-    }
-    if (block.status === 'highlighted') {
+    if (block.value === null) return;
+    if (selectedBlock.has(`${block.x},${block.y}`)) {
         tools.drawRectFill(
             game,
             x,
             y,
             appleSize,
             appleSize,
-            'rgba(255, 217, 103, 0.1)',
+            'rgba(255, 217, 103, 0.5)',
             0,
         );
+        tools.drawApple(
+            game,
+            x,
+            y,
+            appleSize,
+            appleSize,
+            1.0,
+            block.value,
+            'rgba(0, 0, 0, 1)',
+        );
+    } else {
+        tools.drawApple(game, x, y, appleSize, appleSize, 1.0, block.value);
     }
 }
 
@@ -52,19 +64,14 @@ function drawGrid(x: number, y: number) {
     }
 }
 
-export const applesEntity: CanvasEntity = {
-    x: 0,
-    y: 0,
-    draw: (x, y) => {},
-    childrens: [],
-};
+export const applesEntity: CanvasEntity = new CanvasEntity(0, 0, () => {}, []);
 
-export const gameEntity: CanvasEntity = {
-    x: 0,
-    y: 0,
-    draw: (x, y) => {
-        tools.clearCanvas(game);
+export const gameEntity: CanvasEntity = new CanvasEntity(
+    0,
+    0,
+    function (x, y) {
+        clearCanvas(game);
         drawGrid(x, y);
     },
-    childrens: [applesEntity],
-};
+    [applesEntity],
+);

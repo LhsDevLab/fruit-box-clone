@@ -17,11 +17,9 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
-            "@types": ["src/types/index.ts"],
-            "@engine": ["src/engine/index.ts"],
-            "@canvas": ["src/canvas/index.ts"],
-            "@assets": ["src/assets/index.ts"],
-            "@controllers": ["src/controller/index.ts"]
+            "@types/*": ["src/types/*"],
+            "@modules/*": ["src/modules/*"],
+            "@controllers/*": ["src/controller/*"]
         },
 
         /* Linting */

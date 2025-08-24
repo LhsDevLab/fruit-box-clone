@@ -1,4 +1,4 @@
-import type { Role, Board } from '@types';
+import type { Role, Board } from '@/types/engine';
 
 export const role: Role = {
     width: 17,
@@ -11,3 +11,5 @@ export const board: Board = {
     achievedSum: 0,
     status: 'ready',
 };
+
+export let selectedBlock = new Set<string>();

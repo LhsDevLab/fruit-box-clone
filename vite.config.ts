@@ -8,11 +8,9 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': resolve(__dirname, './src'),
-            '@types': resolve(__dirname, './src/types/index.ts'),
-            '@engine': resolve(__dirname, './src/engine/index.ts'),
-            '@canvas': resolve(__dirname, './src/canvas/index.ts'),
-            '@assets': resolve(__dirname, './src/assets'),
-            '@controllers': resolve(__dirname, './src/controllers/index.ts'),
+            '@types': resolve(__dirname, './src/types'),
+            '@modules': resolve(__dirname, './src/modules'),
+            '@controllers': resolve(__dirname, './src/controllers'),
         },
     },
 });

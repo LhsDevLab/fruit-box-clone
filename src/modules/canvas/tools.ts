@@ -1,5 +1,5 @@
-import type { Layer } from '@/types';
-import { imageLoader } from '@assets';
+import type { Layer } from '@/types/canvas';
+import { getImage } from '../assets/controller/getImage';
 
 export function drawLine(
     layer: Layer,
@@ -97,9 +97,10 @@ export function drawApple(
     height: number = 50,
     alpha: number = 1.0, // 투명도 추가 (0.0 ~ 1.0)
     value?: number | null, // 블록의 숫자 값
+    fontColor: string = 'rgba(255, 217, 103, 1)', // 텍스트 색상
 ) {
     const ctx = layer.getCtx();
-    const appleImg = imageLoader.getImage('apple');
+    const appleImg = getImage('apple');
 
     if (!appleImg) {
         console.warn('Apple image not loaded yet');
@@ -114,10 +115,10 @@ export function drawApple(
 
     // 숫자가 있으면 사과 위에 텍스트 그리기
     if (value !== null && value !== undefined) {
-        const fontSize = Math.min(width, height) * 0.35;
-        const color = 'rgba(255, 217, 103, 1)';
+        const fontSize = Math.min(width, height) * 0.45;
+        const color = fontColor;
         const textX = x + width / 2;
-        const textY = y + height * (3 / 5);
+        const textY = y + height * (63 / 100);
 
         // 텍스트에 그림자 효과 추가 (가독성 향상)
         ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';

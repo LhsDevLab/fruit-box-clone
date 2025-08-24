@@ -1,4 +1,4 @@
-import type { Board, Block } from '@types';
+import type { Board, Block } from '@/types/engine';
 import { role, board } from '../status';
 
 function makeBlockValues(): number[][] {
@@ -247,7 +247,6 @@ function makeBlocks(): Block[][] {
                 x: j,
                 y: i,
                 value: values[i][j] === 0 ? null : values[i][j],
-                status: 'normal',
             });
         }
         blocks.push(row);

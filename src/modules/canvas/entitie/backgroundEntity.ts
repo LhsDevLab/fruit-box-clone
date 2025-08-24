@@ -1,11 +1,11 @@
-import type { CanvasEntity } from '@/types';
+import { CanvasEntity } from '@/types/canvas';
 import { background } from '../layers';
 import { drawRectFill, clearCanvas, drawNeonRectLine } from '../tools';
 
-export const backgroundEntity: CanvasEntity = {
-    x: 25,
-    y: 25,
-    draw: (x, y) => {
+export const backgroundEntity: CanvasEntity = new CanvasEntity(
+    25,
+    25,
+    (x, y) => {
         const ctx = background.getCtx();
         clearCanvas(background);
         drawRectFill(
@@ -28,5 +28,5 @@ export const backgroundEntity: CanvasEntity = {
             [5, 3],
         );
     },
-    childrens: [],
-};
+    [],
+);

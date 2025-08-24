@@ -2,7 +2,6 @@ export interface Block {
     x: number;
     y: number;
     value: number | null;
-    status: 'normal' | 'highlighted';
 }
 
 export interface Role {

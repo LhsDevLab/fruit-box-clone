@@ -1,9 +1,8 @@
-import { rootEntity } from '../entitie/entite';
+import { rootEntity } from '../entitie/rootEntity';
 import { background, game, ui } from '../layers';
-import { CanvasEntityController } from '@/types';
 
 export function refreshCanvas() {
-    CanvasEntityController.refresh(rootEntity, rootEntity.x, rootEntity.y);
+    rootEntity.refresh();
 }
 
 export async function initCanvas(element: HTMLElement, window: Window) {
@@ -11,4 +10,5 @@ export async function initCanvas(element: HTMLElement, window: Window) {
         layer.setAppElement(element);
         element.appendChild(layer.canvas);
     }
+    refreshCanvas();
 }

@@ -1,22 +1,42 @@
-import type { Block } from './engine';
-
-export interface CanvasEntity {
+export class CanvasEntity {
     x: number;
     y: number;
     draw: (x: number, y: number) => void;
-    drawChildren?: (x: number, y: number) => void;
-    childrens: CanvasEntity[];
+    parent: CanvasEntity | null = null;
+    childrens: CanvasEntity[] = [];
+    refresh: () => void;
+
+    constructor(
+        x: number,
+        y: number,
+        draw: (x: number, y: number) => void,
+        childrens: CanvasEntity[] = [],
+    ) {
+        this.x = x;
+        this.y = y;
+        this.draw = draw;
+        for (const child of childrens) {
+            CanvasEntityChildAdder.addChild(this, child);
+        }
+        this.refresh = function () {
+            const x = (this.parent ? this.parent.x : 0) + this.x;
+            const y = (this.parent ? this.parent.y : 0) + this.y;
+            this.draw(x, y);
+            if (this.childrens) {
+                this.childrens.forEach((child) => {
+                    child.refresh();
+                });
+            }
+        };
+    }
 }
 
-export interface AppleEntity extends CanvasEntity {
-    block: Block;
-}
-
-export const CanvasEntityController = {
+export const CanvasEntityChildAdder = {
     addChild(entity: CanvasEntity, child: CanvasEntity): void {
         if (!entity.childrens) {
             entity.childrens = [];
         }
+        child.parent = entity;
         entity.childrens.push(child);
     },
     removeChild(entity: CanvasEntity, child: CanvasEntity): void {
@@ -27,14 +47,38 @@ export const CanvasEntityController = {
     removeAllChildren(entity: CanvasEntity): void {
         entity.childrens = [];
     },
-    refresh(entity: CanvasEntity, baseX: number = 0, baseY: number = 0): void {
-        const x = baseX + entity.x;
-        const y = baseY + entity.y;
-        entity.draw(x, y);
-        if (entity.childrens) {
-            entity.childrens.forEach((child) => {
-                CanvasEntityController.refresh(child, x, y);
-            });
-        }
-    },
 };
+
+export class Layer {
+    canvas: HTMLCanvasElement = document.createElement('canvas');
+    appElement: HTMLElement | null = null;
+
+    setAppElement(element: HTMLElement) {
+        this.appElement = element;
+    }
+
+    getCtx(): CanvasRenderingContext2D {
+        const ctx = this.canvas.getContext('2d');
+        if (!ctx) {
+            throw new Error('Failed to get canvas context');
+        }
+        return ctx;
+    }
+
+    constructor(
+        width: number = 2000,
+        height: number = 2000,
+        depth: number = 0,
+    ) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.canvas.style.zIndex = depth.toString();
+
+        // 기본 스타일 설정
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
+    }
+}

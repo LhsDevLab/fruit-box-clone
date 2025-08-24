@@ -1,17 +1,13 @@
-import { initCanvas, refreshCanvas } from '@/canvas';
-import { setReady } from '@/engine/controller/board';
-import { imageLoader, GAME_IMAGES } from '@assets';
+import { initCanvas } from '@/modules/canvas/controller/canvas';
+import { loadImages } from '@/modules/assets/controller/loadImages';
+import { initEvents } from '@/modules/engine/controller/event';
 
 export async function load(element: HTMLElement, window: Window) {
     // 이미지 로드
-    await imageLoader.loadImages(GAME_IMAGES);
-
-    // 엔진 세팅
-    setReady();
+    await loadImages();
 
     // 캔버스 초기화
     initCanvas(element, window);
 
-    // 캔버스 리프레시
-    refreshCanvas();
+    initEvents();
 }
