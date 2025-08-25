@@ -20,7 +20,10 @@ export function checkList(): boolean {
     });
     // 목표 금액과 일치하면 처리
     if (sum === role.goalSum) {
-        board.achievedSum += selectedBlock.length;
+        board.achievedSum += selectedBlock.filter(({ x, y }) => {
+            const block = board.blocks[y][x];
+            return block.value !== null;
+        }).length;
         selectedBlock.forEach(({ x, y }) => {
             updateApple(x, y, null);
         });
