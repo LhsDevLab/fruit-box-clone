@@ -118,7 +118,7 @@ const resetButtonEntity: CanvasEntity = new CanvasEntity(
             width,
             height,
             'rgba(255, 217, 103, 0.7)',
-            65,
+            35,
             [5, 3],
         );
     },
